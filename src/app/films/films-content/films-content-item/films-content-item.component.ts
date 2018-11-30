@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import {FilmShortModel} from '../../films.model';
 
 @Component({
   selector: 'app-films-content-item',
@@ -7,9 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class FilmsContentItemComponent implements OnInit {
 
-  @Input() name: string;
-  @Input() info: string;
-  @Input() image: string;
+  @Input() film: FilmShortModel;
 
   constructor() { }
 

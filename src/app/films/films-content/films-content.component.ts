@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {FilmShortModel} from '../films.model';
 
 @Component({
   selector: 'app-films-content',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FilmsContentComponent implements OnInit {
 
-  public films: any[];
+  public films: FilmShortModel[];
   public defaults: any[] = [
     {
       name: 'Зеленая миля',

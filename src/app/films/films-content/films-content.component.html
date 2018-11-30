@@ -1,8 +1,6 @@
 <div>
   <app-films-content-item *ngFor="let film of films"
-                          [name]="film.name"
-                          [info]="film.info"
-                          [image]="film.image"
+                          [film]="film"
   >
   </app-films-content-item>
 </div>

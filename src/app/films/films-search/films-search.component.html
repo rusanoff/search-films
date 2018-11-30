@@ -1,0 +1,8 @@
+<div class="search">
+    <input class="search__input" type="text" placeholder="Введите название фильма"
+           ([ngModel])="value"
+           (keyup)="inputKeyPress($event)"
+    >
+    <button class="search__btn">Найти</button>
+</div>
+<div>{{film}}</div>

@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input} from '@angular/core';
 import {FilmShortModel} from '../films.model';
+import {FilmsService} from '../films.service';
 
 @Component({
   selector: 'app-films-content',
@@ -8,19 +9,39 @@ import {FilmShortModel} from '../films.model';
 })
 export class FilmsContentComponent implements OnInit {
 
-  public films: FilmShortModel[];
-  public defaults: any[] = [
-    {
-      name: 'Зеленая миля',
-      info: 'Пол Эджкомб — начальник блока смертников в тюрьме «Холодная гора», каждый из узников которого однажды проходит «зеленую милю» по пути к месту казни. Пол повидал много заключённых и надзирателей за время работы. Однако гигант Джон Коффи, обвинённый в страшном преступлении, стал одним из самых необычных обитателей блока.',
-      image: 'https://st.kp.yandex.net/images/film_iphone/iphone360_435.jpg'
-    }
-  ];
+  @Input() films: FilmShortModel[];
 
-  constructor() { }
+  private imagePlaceholder = 'https://via.placeholder.com/200x240';
+
+  constructor(private service: FilmsService) { }
 
   ngOnInit() {
-    this.films = [...this.defaults, ...this.defaults, ...this.defaults, ...this.defaults];
+    this.getRandomFilms();
+  }
+
+  getRandomFilms() {
+    this.service.getRandomFilms().subscribe((films) => {
+      this.films = films.map((film) => {
+        const filmObj = new FilmShortModel('', '', '', '', '', '');
+
+        filmObj.title = film['Title'];
+        filmObj.year = film['Year'];
+        filmObj.plot = this.setValidValue(film, 'Plot');
+        filmObj.runtime = this.setValidValue(film, 'Runtime');
+        filmObj.poster = film['Poster'] !== 'N/A' ? film['Poster'] : this.imagePlaceholder;
+        filmObj.genre = this.setValidValue(film, 'Genre');
+
+        if (filmObj.plot.length > 100) {
+            filmObj.plot = `${filmObj.plot.slice(0, 97)}...`;
+        }
+
+        return filmObj;
+      });
+    });
+  }
+
+  private setValidValue(obj: any, prop: string) {
+    return obj[prop] !== 'N/A' ? obj[prop] : `${prop} is not found`;
   }
 
 }

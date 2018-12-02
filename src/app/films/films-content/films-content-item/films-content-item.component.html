@@ -1,10 +1,16 @@
-<div>
-  <div>
-    <img src="{{image}}" alt="{{name}}">
-  </div>
-  <div>
-    <div>{{name}}</div>
-    <div>{{info}}</div>
-    <div>Подробнее</div>
+<div class="film">
+  <div class="film__poster" [ngStyle]="{ 'background-image': 'url(' + film.poster + ')'}"></div>
+  <div class="film__info">
+    <div class="film__prop film__prop--title">{{film.title}} ({{film.year}})</div>
+    <div class="film__prop">
+      <span class="film__prop--header">Genre:</span> {{film.genre}}
+    </div>
+    <div class="film__prop">
+      <span class="film__prop--header">Time:</span> {{film.runtime}}
+    </div>
+    <div class="film__prop">{{film.plot}}</div>
+    <div class="film__prop film__prop--more">
+      <a class="film__link" href="javascript:void(0)">Подробнее</a>
+    </div>
   </div>
 </div>

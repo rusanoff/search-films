@@ -2,12 +2,10 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
-  margin-top: 50px;
+  margin: 50px 0;
 
   &__input {
-    margin: 0;
-    padding: 0;
-    border: 0;
+    margin: 0 10px 0 0;
     outline: none;
     border: 1px solid #ddd;
     border-radius: 20px;
@@ -15,7 +13,6 @@
     padding: 0 20px;
     width: 100%;
     min-width: 190px;
-    margin-right: 10px;
     font-size: 20px;
     font-family: 'Open Sans', sans-serif;
     font-weight: 400;
@@ -53,6 +50,11 @@
     outline: none;
     font-family: 'Open Sans', sans-serif;
     font-weight: 300;
+    font-size: 14px;
+
+    &:hover {
+      background-color: #ffe791;
+    }
 
     &:focus {
       outline: none;

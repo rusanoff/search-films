@@ -1,0 +1,63 @@
+.film {
+  display: flex;
+  width: 100%;
+  max-width: 445px;
+  margin-bottom: 20px;
+
+  &:nth-child(odd) {
+    margin-right: 20px;
+  }
+
+  &__info {
+    position: relative;
+    overflow: hidden;
+  }
+
+  &__poster {
+    width: 200px;
+    height: 240px;
+    margin-right: 10px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-color: #eee;
+    background-size: contain;
+  }
+
+  &__prop {
+    margin-bottom: 10px;
+    width: 235px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    &--title {
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    &--header {
+      font-weight: 700;
+    }
+
+    &--more {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      display: inline-block;
+      vertical-align: bottom;
+      line-height: 1;
+    }
+  }
+
+  &__link {
+    color: #999;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 400;
+
+    &:hover {
+      color: #ffdb4d;
+    }
+  }
+}

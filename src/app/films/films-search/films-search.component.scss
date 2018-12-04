@@ -13,9 +13,11 @@
     padding: 0 20px;
     width: 100%;
     min-width: 190px;
+    max-width: 830px;
     font-size: 20px;
     font-family: 'Open Sans', sans-serif;
     font-weight: 400;
+    box-sizing: border-box;
 
     &:focus {
       outline: none;
@@ -51,6 +53,7 @@
     font-family: 'Open Sans', sans-serif;
     font-weight: 300;
     font-size: 14px;
+    box-sizing: border-box;
 
     &:hover {
       background-color: #ffe791;

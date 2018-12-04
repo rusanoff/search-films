@@ -1,4 +1,4 @@
-import { Component, OnInit, Input} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import {FilmShortModel} from '../films.model';
 import {FilmsService} from '../films.service';
 
@@ -8,10 +8,7 @@ import {FilmsService} from '../films.service';
   styleUrls: ['./films-content.component.scss']
 })
 export class FilmsContentComponent implements OnInit {
-
-  @Input() films: FilmShortModel[];
-
-  private imagePlaceholder = 'https://via.placeholder.com/200x240';
+  films: FilmShortModel[];
 
   constructor(private service: FilmsService) { }
 
@@ -21,27 +18,7 @@ export class FilmsContentComponent implements OnInit {
 
   getRandomFilms() {
     this.service.getRandomFilms().subscribe((films) => {
-      this.films = films.map((film) => {
-        const filmObj = new FilmShortModel('', '', '', '', '', '');
-
-        filmObj.title = film['Title'];
-        filmObj.year = film['Year'];
-        filmObj.plot = this.setValidValue(film, 'Plot');
-        filmObj.runtime = this.setValidValue(film, 'Runtime');
-        filmObj.poster = film['Poster'] !== 'N/A' ? film['Poster'] : this.imagePlaceholder;
-        filmObj.genre = this.setValidValue(film, 'Genre');
-
-        if (filmObj.plot.length > 100) {
-            filmObj.plot = `${filmObj.plot.slice(0, 97)}...`;
-        }
-
-        return filmObj;
-      });
+      this.films = films;
     });
   }
-
-  private setValidValue(obj: any, prop: string) {
-    return obj[prop] !== 'N/A' ? obj[prop] : `${prop} is not found`;
-  }
-
 }

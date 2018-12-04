@@ -1,14 +1,16 @@
 <div class="film">
-  <div class="film__poster" [ngStyle]="{ 'background-image': 'url(' + film.poster + ')'}"></div>
+  <div class="film__poster" [ngStyle]="{'background-image': 'url(' + film.poster + ')'}"></div>
   <div class="film__info">
     <div class="film__prop film__prop--title">{{film.title}} ({{film.year}})</div>
     <div class="film__prop">
-      <span class="film__prop--header">Genre:</span> {{film.genre}}
+      <span class="film__prop--header">Genre:</span>&nbsp;
+      <span [ngClass]="{'empty': isNotFound(film.genre)}">{{film.genre}}</span>
     </div>
     <div class="film__prop">
-      <span class="film__prop--header">Time:</span> {{film.runtime}}
+      <span class="film__prop--header">Time:</span>&nbsp;
+      <span [ngClass]="{'empty': isNotFound(film.runtime)}">{{film.runtime}}</span>
     </div>
-    <div class="film__prop">{{film.plot}}</div>
+    <div class="film__prop" [ngClass]="{'empty': isNotFound(film.plot)}">{{film.plot}}</div>
     <div class="film__prop film__prop--more">
       <a class="film__link" href="javascript:void(0)">Подробнее</a>
     </div>

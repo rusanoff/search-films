@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FilmsService} from '../films.service';
 
 @Component({
@@ -8,7 +8,9 @@ import {FilmsService} from '../films.service';
 })
 export class FilmsSearchComponent implements OnInit {
   value = '';
-  film = '';
+
+  @Output() search: EventEmitter<any> = new EventEmitter<any>();
+  @Output() load: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(private service: FilmsService) {
   }
@@ -22,16 +24,19 @@ export class FilmsSearchComponent implements OnInit {
     if (event.keyCode === 13) {
       event.preventDefault();
       event.stopPropagation();
-      this.getFilm(this.value);
+      this.getFilms(this.value);
     }
   }
 
-  getFilm(value) {
-    this.service.getFilm(value)
-      .subscribe((data) => {
-        console.log(data);
-      }, (e) => {
-        console.log(e);
-      });
+  getFilms(value) {
+    this.search.emit(value);
+
+    // this.service.getFilms(value)
+    //   .subscribe((data) => {
+    //     this.search.emit(data);
+    //     this.load.emit(false);
+    //   }, (e) => {
+    //     console.log(e);
+    //   });
   }
 }

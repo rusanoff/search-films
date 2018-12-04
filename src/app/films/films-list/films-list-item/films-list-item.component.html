@@ -1,0 +1,13 @@
+<div class="film">
+  <div class="film__poster" [ngStyle]="{'background-image': 'url(' + film.poster + ')'}"></div>
+  <div class="film__info">
+    <div class="film__title">{{film.title}} ({{film.year}})</div>
+    <div class="film__type">
+      <span class="bold">Type:</span>&nbsp;
+      <span [ngClass]="{'empty': isNotFound(film.type)}">{{film.type}}</span>
+    </div>
+  </div>
+  <div class="film__more">
+    <a class="film__more-btn" routerLink="/films/{{film.title}}"></a>
+  </div>
+</div>

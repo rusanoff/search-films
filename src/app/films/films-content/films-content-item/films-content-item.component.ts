@@ -8,11 +8,17 @@ import {FilmShortModel} from '../../films.model';
 })
 export class FilmsContentItemComponent implements OnInit {
 
+  private errorSubstr = 'not found';
+
   @Input() film: FilmShortModel;
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  isNotFound(prop: string) {
+    return prop && prop.indexOf(this.errorSubstr) !== -1;
   }
 
 }

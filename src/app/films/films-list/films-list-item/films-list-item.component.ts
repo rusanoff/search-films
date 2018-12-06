@@ -1,6 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FilmShortModel} from '../../films.model';
-import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-films-list-item',
@@ -8,11 +7,11 @@ import {ActivatedRoute, Router} from '@angular/router';
   styleUrls: ['./films-list-item.component.scss']
 })
 export class FilmsListItemComponent implements OnInit {
-  private errorSubstr = 'not found';
+  private errorSubstr = 'is not found';
 
   @Input() film: FilmShortModel;
 
-  constructor(private router: Router) {
+  constructor() {
   }
 
   ngOnInit() {
@@ -20,9 +19,5 @@ export class FilmsListItemComponent implements OnInit {
 
   isNotFound(prop: string) {
     return prop && prop.indexOf(this.errorSubstr) !== -1;
-  }
-
-  changeFilm(film) {
-    this.router.navigate(['/films', film.requestParam]);
   }
 }

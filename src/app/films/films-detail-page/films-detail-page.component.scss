@@ -1,0 +1,102 @@
+.film {
+  display: flex;
+  flex-direction: column;
+  margin: 50px 0;
+
+  &__block {
+    display: flex;
+    margin-bottom: 20px;
+  }
+
+  &__poster {
+    min-width: 300px;
+    height: 500px;
+    background-color: transparent;
+    margin-right: 20px;
+    overflow: hidden;
+  }
+
+  &__img {
+    min-width: 300px;
+    min-height: 360px;
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: contain;
+    margin-bottom: 20px;
+  }
+
+  &__title {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    line-height: 1;
+  }
+
+  &__row {
+    margin-bottom: 5px;
+  }
+
+  &__text {
+    font-size: 16px;
+
+    &.bold {
+      font-weight: 700;
+    }
+
+    &.money {
+      color: #009900;
+    }
+  }
+
+  &__rating {
+    margin-bottom: 20px;
+
+    &-item {
+      width: 100px;
+      height: 30px;
+      word-wrap: break-word;
+      word-break: break-word;
+      text-align: center;
+
+      &-title {
+        font-size: 12px;
+        font-weight: bold;
+      }
+
+      &-value {
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+.back {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 60px;
+  min-height: 100vh;
+
+  &__link {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #000;
+    transition-duration: .2s;
+
+    &:hover {
+      background-color: #ffdb4d;
+    }
+  }
+
+  &__arrow {
+    width: 40px;
+    height: 40px;
+    border-top: 2px solid #fff;
+    border-left: 2px solid #fff;
+    transform: rotate(-45deg);
+    margin: auto 0 auto auto;
+    align-self: center;
+  }
+}

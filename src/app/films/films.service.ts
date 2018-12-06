@@ -1,6 +1,7 @@
+import * as humps from 'humps';
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
-import {forkJoin} from 'rxjs';
+import {forkJoin, Observable, Observer} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {FilmShortModel} from './films.model';
 
@@ -16,39 +17,40 @@ export class FilmsService {
   constructor(private http: HttpClient) {
   }
 
-  getFilms(name: string) {
+  getFilms(name: string): Observable<Object> {
     let params = new HttpParams();
 
     params = params.append('s', name);
     params = params.append('apikey', this.apikey);
 
     return this.http.get(`${this.url}`, {params})
-      .pipe(map((data) => {
+      .pipe(map((data: any) => {
         if (data['Response'] === 'True') {
           data['Search'].map((film) => {
-            const filmObj = new FilmShortModel(
-              this.setValidValue(film, 'Poster', this.imagePlaceholder),
+            return new FilmShortModel(
+              film['Poster'],
               film['Title'],
               film['Year'],
               '',
               '',
               '',
-              this.setValidValue(film, 'Type'),
+              film['Type']
             );
-
-            if (filmObj.type.indexOf('not found') === -1) {
-              filmObj.type = this.createFilmTypeValue(filmObj.type);
-            }
-
-            return filmObj;
           });
-        } else {
-          return [];
+
+          data['Search'].map((film) => {
+            film['Type'] = this.createFilmTypeValue(film['Type']);
+            film['Poster'] = this.setValidValue(film, 'Poster', this.imagePlaceholder);
+          });
+
+          return humps.camelizeKeys(data['Search']);
         }
+
+        return [];
       }));
   }
 
-  getFilm(film) {
+  getFilm(film): Observable<Object> {
     let params = new HttpParams();
 
     params = params.append('t', film.title);
@@ -58,7 +60,9 @@ export class FilmsService {
     params = params.append('apikey', this.apikey);
 
     return this.http.get(`${this.url}`, {params})
-      .pipe();
+      .pipe(map((data) => {
+        return humps.camelizeKeys(data);
+      }));
   }
 
   getRandomFilms() {
@@ -92,7 +96,7 @@ export class FilmsService {
     return forkJoin(observables);
   }
 
-  private generateFilmId() {
+  private generateFilmId(): string {
     let idValidPart = '';
 
     for (let i = 0; i < 6; i++) {
@@ -102,7 +106,7 @@ export class FilmsService {
     return `tt0${idValidPart}`;
   }
 
-  private setValidValue(obj: any, prop: string, defaultValue?: string) {
+  private setValidValue(obj: any, prop: string, defaultValue?: string): string {
     return (obj[prop] && obj[prop] !== 'N/A') ? obj[prop] : defaultValue ? defaultValue : `${prop} is not found`;
   }
 

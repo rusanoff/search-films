@@ -1,0 +1,74 @@
+<div class="back">
+  <a class="back__link" routerLink="/films">
+    <div class="back__arrow"></div>
+  </a>
+</div>
+<div class="film">
+  <div class="film__block">
+    <div class="film__poster">
+      <div class="film__img" [ngStyle]="{'background-image': 'url(' + film.poster + ')'}"></div>
+      <table class="film__rating">
+        <tr class="film__rating-item">
+          <td class="film__rating-item film__rating-item-title" *ngFor="let rating of film.ratings">{{rating.source}}</td>
+        </tr>
+        <tr class="film__rating-item">
+          <td class="film__rating-item film__rating-item-value" *ngFor="let rating of film.ratings">{{rating.value}}</td>
+        </tr>
+      </table>
+    </div>
+    <div class="film__info">
+      <h1 class="film__title">{{film.title}} ({{film.year}})</h1>
+      <div class="film__row">
+        <span class="film__text bold">Type: </span>
+        <span class="film__text">{{film.type}}</span>
+      </div>
+      <div class="film__row">
+        <span class="film__text bold">Production: </span>
+        <span class="film__text">{{film.production}}</span>
+      </div>
+      <div class="film__row">
+        <span class="film__text bold">Genre: </span>
+        <span class="film__text">{{film.genre}}</span>
+      </div>
+      <div class="film__row">
+        <span class="film__text bold">Runtime: </span>
+        <span class="film__text">{{film.runtime}}</span>
+      </div>
+      <div class="film__row">
+        <span class="film__text bold">Awards: </span>
+        <span class="film__text">{{film.awards}}</span>
+      </div>
+      <div class="film__row">
+        <span class="film__text bold">BoxOffice: </span>
+        <span class="film__text money">{{film.boxOffice}}</span>
+      </div>
+      <div class="film__row">
+        <span class="film__text bold">Released: </span>
+        <span class="film__text">{{film.released}}</span>
+      </div>
+      <div class="film__row">
+        <span class="film__text bold">DVD: </span>
+        <span class="film__text">{{film.dVD}}</span>
+      </div>
+      <div class="film__row">
+        <span class="film__text bold">Director: </span>
+        <span class="film__text">{{film.director}}</span>
+      </div>
+      <div class="film__row">
+        <span class="film__text bold">Writers: </span>
+        <span class="film__text">{{film.writer}}</span>
+      </div>
+      <div class="film__row">
+        <span class="film__text bold">Country: </span>
+        <span class="film__text">{{film.country}}</span>
+      </div>
+      <div class="film__row">
+        <span class="film__text bold">Languages: </span>
+        <span class="film__text">{{film.language}}</span>
+      </div>
+    </div>
+  </div>
+  <div class="film__block">
+    <div class="film__plot">{{film.plot}}</div>
+  </div>
+</div>

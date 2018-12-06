@@ -13,6 +13,7 @@ export class FilmsListComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+
   }
 
 }

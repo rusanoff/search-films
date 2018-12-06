@@ -2,8 +2,25 @@
   display: flex;
   margin-bottom: 20px;
 
+  &__link {
+    display: flex;
+    width: 100%;
+    color: #000;
+    text-decoration: none;
+    background: transparent;
+    transition-duration: .2s;
+
+    &:hover {
+      background-color: #ffdb4d;
+
+      & .film__more-btn {
+        border-color: #fff;
+      }
+    }
+  }
+
   &__poster {
-    width: 120px;
+    min-width: 120px;
     height: 144px;
     margin-right: 10px;
     background-repeat: no-repeat;
@@ -44,14 +61,6 @@
       transform: rotate(45deg);
       margin: auto auto auto 0;
       transition-duration: .2s;
-    }
-
-    &:hover {
-      background-color: #ffdb4d;
-
-      & .film__more-btn {
-        border-color: #fff;
-      }
     }
   }
 }

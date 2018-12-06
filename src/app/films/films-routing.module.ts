@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { FilmsListPageComponent } from './films-list-page/films-list-page.component';
-import { FilmsListItemDetailComponent } from './films-list/films-list-item-detail/films-list-item-detail.component';
+import {FilmsDetailPageComponent} from './films-detail-page/films-detail-page.component';
+import {NotFoundComponent} from '../not-found/not-found.component';
 
 const routes: Routes = [
   {
@@ -9,17 +10,21 @@ const routes: Routes = [
     component: FilmsListPageComponent
   },
   {
-    path: '/films',
+    path: 'films',
     component: FilmsListPageComponent
   },
   {
-    path: '/films/:title',
-    component: FilmsListItemDetailComponent
+    path: 'films/:title',
+    component: FilmsDetailPageComponent
+  },
+  {
+    path: '**',
+    component: NotFoundComponent
   }
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
 export class FilmsRoutingModule { }

@@ -1,3 +1,14 @@
-<div>
-  <app-films-list [films]="data"></app-films-list>
+<div class="container">
+  <app-films-search (search)="search($event)"
+                    (load)="load($event)"></app-films-search>
+
+  <app-loader [loading]="loading">
+
+  <app-films-content *ngIf="canShowComponent(!searching)"></app-films-content>
+
+  <app-films-list *ngIf="canShowComponent(searching)"
+                    [films]="data"></app-films-list>
+
+  </app-loader>
+  <router-outlet></router-outlet>
 </div>

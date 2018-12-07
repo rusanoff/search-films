@@ -18,7 +18,7 @@ export class FilmsListPageComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (localStorage.length) {
+    if (localStorage.getItem('searchFilms')) {
       this.data = JSON.parse(localStorage.getItem('searchFilms'));
       this.searching = true;
     }
@@ -32,20 +32,29 @@ export class FilmsListPageComponent implements OnInit {
     return !this.loading && searching && !this.acRoute.snapshot.params.title;
   }
 
-  search(title) {
-    this.service.getFilms(title).subscribe((data: FilmShortModel[]) => {
-      this.data = data;
-      this.searching = !!this.data.length;
-      this.setSearchStorage(this.data, title);
-    });
+  search(title: string) {
+    this.searching = !!title;
+
+    if (title.length) {
+      this.service.getFilms(title).subscribe((data: FilmShortModel[]) => {
+        this.data = data;
+
+        this.setSearchStorage(this.data, title);
+      });
+    } else {
+      this.data = [];
+    }
   }
 
   setSearchStorage(data: FilmShortModel[], value: string) {
-    const result = data.length ? JSON.stringify(data) : null;
+    const resultD = data.length ? JSON.stringify(data) : null;
     const resultV = value ? JSON.stringify(value) : null;
 
-    if (result && value.length) {
-      localStorage.setItem('searchFilms', result);
+    if (resultD) {
+      localStorage.setItem('searchFilms', resultD);
+    }
+
+    if (resultV) {
       localStorage.setItem('searchTitle', resultV);
     }
   }

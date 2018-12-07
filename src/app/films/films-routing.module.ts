@@ -18,8 +18,13 @@ const routes: Routes = [
     component: FilmsDetailPageComponent
   },
   {
-    path: '**',
+    path: 'not-found',
     component: NotFoundComponent
+  },
+  {
+    path: '**',
+    redirectTo: '/not-found',
+    data: {title: 'Страница не найлена'}
   }
 ];
 

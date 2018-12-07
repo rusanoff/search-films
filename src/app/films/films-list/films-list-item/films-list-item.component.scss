@@ -16,6 +16,10 @@
       & .film__more-btn {
         border-color: #fff;
       }
+
+      & .film__poster {
+        background-color: #ffdb4d;
+      }
     }
   }
 
@@ -25,8 +29,9 @@
     margin-right: 10px;
     background-repeat: no-repeat;
     background-position: center center;
-    background-color: #eee;
+    background-color: #ccc;
     background-size: contain;
+    transition-duration: .2s;
   }
 
   &__title {
@@ -44,6 +49,12 @@
     & .empty {
       color: #cc0000;
     }
+  }
+
+  &__info {
+    width: calc(100% - 90px);
+    word-wrap: break-word;
+    word-break: break-word;
   }
 
   &__more {

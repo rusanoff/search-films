@@ -12,26 +12,23 @@ export class FilmsSearchComponent implements OnInit {
   @Output() load: EventEmitter<any> = new EventEmitter<any>();
 
   ngOnInit() {
-    if (localStorage.length) {
-      const localTitle = localStorage.getItem('searchTitle');
-      const title = localTitle ? JSON.parse(localTitle) : null;
+    const localTitle = localStorage.getItem('searchTitle');
 
-      this.value = title;
+    if (localTitle) {
+      this.value = JSON.parse(localTitle);
+    } else {
+      this.value = '';
     }
   }
 
   inputKeyPress(event) {
-    const title = JSON.parse( localStorage.getItem('searchTitle') );
-
     this.value = event.target.value;
 
     if (event.keyCode === 13) {
       event.preventDefault();
       event.stopPropagation();
 
-      if (this.value !== title) {
-        this.getFilms(this.value);
-      }
+      this.getFilms(this.value);
     }
   }
 
@@ -46,7 +43,11 @@ export class FilmsSearchComponent implements OnInit {
   }
 
   getFilms(value: string) {
-    this.search.emit(value);
+    const title = JSON.parse( localStorage.getItem('searchTitle') );
+
+    if (value !== title) {
+      this.search.emit(value);
+    }
 
     if (!value.length) {
       localStorage.clear();

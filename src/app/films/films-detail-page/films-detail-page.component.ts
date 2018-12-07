@@ -21,7 +21,9 @@ export class FilmsDetailPageComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private service: FilmsService) {
-    this.routeSubscription = route.params.subscribe(params => this.filmObj.title = params.title);
+    this.routeSubscription = route.params.subscribe(params => {
+      this.filmObj.title = params.title;
+    });
     this.querySubscription = route.queryParams.subscribe(
       (queryParam: any) => {
         this.filmObj.year = queryParam.year;

@@ -18,36 +18,36 @@ export class FilmsService {
   }
 
   getFilms(name: string): Observable<Object> {
-    let params = new HttpParams();
+      let params = new HttpParams();
 
-    params = params.append('s', name);
-    params = params.append('apikey', this.apikey);
+      params = params.append('s', name);
+      params = params.append('apikey', this.apikey);
 
-    return this.http.get(`${this.url}`, {params})
-      .pipe(map((data: any) => {
-        if (data['Response'] === 'True') {
-          data['Search'].map((film) => {
-            return new FilmShortModel(
-              film['Poster'],
-              film['Title'],
-              film['Year'],
-              '',
-              '',
-              '',
-              film['Type']
-            );
-          });
+      return this.http.get(`${this.url}`, {params})
+        .pipe(map((data: any) => {
+          if (data['Response'] === 'True') {
+            data['Search'].map((film) => {
+              return new FilmShortModel(
+                film['Poster'],
+                film['Title'],
+                film['Year'],
+                '',
+                '',
+                '',
+                film['Type']
+              );
+            });
 
-          data['Search'].map((film) => {
-            film['Type'] = this.createFilmTypeValue(film['Type']);
-            film['Poster'] = this.setValidValue(film, 'Poster', this.imagePlaceholder);
-          });
+            data['Search'].map((film) => {
+              film['Type'] = this.createFilmTypeValue(film['Type']);
+              film['Poster'] = this.setValidValue(film, 'Poster', this.imagePlaceholder);
+            });
 
-          return humps.camelizeKeys(data['Search']);
-        }
+            return humps.camelizeKeys(data['Search']);
+          }
 
-        return [];
-      }));
+          return [];
+        }));
   }
 
   getFilm(film): Observable<Object> {
@@ -76,20 +76,29 @@ export class FilmsService {
 
       observables.push(this.http.get(`${this.url}`, {params})
         .pipe(map((film) => {
-          const filmObj = new FilmShortModel(
-            this.setValidValue(film, 'Poster', this.imagePlaceholder),
-            film['Title'],
-            film['Year'],
-            this.setValidValue(film, 'Plot'),
-            this.setValidValue(film, 'Genre'),
-            this.setValidValue(film, 'Runtime')
-          );
+          if (film['Response'] === 'True') {
+            const filmObj = new FilmShortModel(
+              this.setValidValue(film, 'Poster', this.imagePlaceholder),
+              film['Title'],
+              film['Year'],
+              this.setValidValue(film, 'Plot'),
+              this.setValidValue(film, 'Genre'),
+              this.setValidValue(film, 'Runtime'),
+              film['Type']
+            );
 
-          if (filmObj.plot && filmObj.plot.length > 100) {
-            filmObj.plot = `${filmObj.plot.slice(0, 97)}...`;
+            if (filmObj.plot && filmObj.plot.length > 100) {
+              filmObj.plot = `${filmObj.plot.slice(0, 97)}...`;
+            }
+
+            if (filmObj.type === 'N/A') {
+              filmObj.type = '';
+            }
+
+            return filmObj;
+          } else {
+            return new FilmShortModel('', '', '', '', '' , '');
           }
-
-          return filmObj;
         })));
     }
 

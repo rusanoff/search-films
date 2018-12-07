@@ -19,6 +19,10 @@
     font-weight: 400;
     box-sizing: border-box;
 
+    &.active {
+      border-color: #ffdb4d;
+    }
+
     &:focus {
       outline: none;
       border: 1px solid #ffdb4d;
@@ -65,6 +69,12 @@
 
     &:active {
       background-color: #eac748;
+    }
+
+    &[disabled] {
+      color: #000;
+      background-color: #ddd;
+      cursor: default;
     }
   }
 }

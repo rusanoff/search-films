@@ -16,4 +16,7 @@ export class FilmsListComponent implements OnInit {
 
   }
 
+  haveData(films: FilmShortModel[]): boolean {
+    return this.films && !!films.length;
+  }
 }

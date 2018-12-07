@@ -1,9 +1,12 @@
 <div class="search">
     <input class="search__input" type="text" placeholder="Enter movie title"
+           [ngClass]="{'active': value}"
            value="{{value}}"
            (ngModel)="value"
            (keyup)="inputKeyPress($event)"
            (blur)="inputBlur($event)"
     >
-    <button class="search__btn" (click)="getFilms(value)">Search</button>
+    <button class="search__btn"
+            (click)="getFilms(value)"
+            [disabled]="!value.length">Search</button>
 </div>

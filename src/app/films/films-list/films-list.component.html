@@ -1,4 +1,7 @@
-<div class="films">
+<div class="films" *ngIf="haveData(films)">
   <app-films-list-item *ngFor="let film of films"
                        [film]="film"></app-films-list-item>
+</div>
+<div class="films__error" *ngIf="!haveData(films)">
+  По Вашему запросу ничего не найдено
 </div>

@@ -1,7 +1,7 @@
 import * as humps from 'humps';
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
-import {forkJoin, Observable, Observer} from 'rxjs';
+import {forkJoin, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {FilmShortModel} from './films.model';
 
@@ -10,7 +10,7 @@ import {FilmShortModel} from './films.model';
 })
 export class FilmsService {
   private url = 'http://www.omdbapi.com';
-  private apikey = 'e1ec7fad';
+  // private apikey = 'e1ec7fad';
   private randomFilmsCount = 4;
   private imagePlaceholder = 'https://via.placeholder.com/200x240';
 
@@ -21,7 +21,6 @@ export class FilmsService {
       let params = new HttpParams();
 
       params = params.append('s', name);
-      params = params.append('apikey', this.apikey);
 
       return this.http.get(`${this.url}`, {params})
         .pipe(map((data: any) => {
@@ -57,7 +56,6 @@ export class FilmsService {
     params = params.append('y', film.year);
     params = params.append('type', film.type);
     params = params.append('plot', 'full');
-    params = params.append('apikey', this.apikey);
 
     return this.http.get(`${this.url}`, {params})
       .pipe(map((data) => {
@@ -72,7 +70,6 @@ export class FilmsService {
       let params = new HttpParams();
 
       params = params.append('i', this.generateFilmId());
-      params = params.append('apikey', this.apikey);
 
       observables.push(this.http.get(`${this.url}`, {params})
         .pipe(map((film) => {
@@ -105,6 +102,10 @@ export class FilmsService {
     return forkJoin(observables);
   }
 
+  setValidValue(obj: any, prop: string, defaultValue?: string): string {
+    return (obj[prop] && obj[prop] !== 'N/A') ? obj[prop] : defaultValue ? defaultValue : `${prop} is not found`;
+  }
+
   private generateFilmId(): string {
     let idValidPart = '';
 
@@ -113,10 +114,6 @@ export class FilmsService {
     }
 
     return `tt0${idValidPart}`;
-  }
-
-  private setValidValue(obj: any, prop: string, defaultValue?: string): string {
-    return (obj[prop] && obj[prop] !== 'N/A') ? obj[prop] : defaultValue ? defaultValue : `${prop} is not found`;
   }
 
   private createFilmTypeValue(type: string): string {

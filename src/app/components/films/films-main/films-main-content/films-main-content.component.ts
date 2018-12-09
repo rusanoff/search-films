@@ -1,19 +1,19 @@
 import { Component, OnInit} from '@angular/core';
-import {FilmShortModel} from '../films.model';
-import {FilmsService} from '../films.service';
+import {FilmShortModel} from '../../films.model';
+import {FilmsService} from '../../films.service';
 
 @Component({
   selector: 'app-films-content',
-  templateUrl: './films-content.component.html',
-  styleUrls: ['./films-content.component.scss']
+  templateUrl: './films-main-content.component.html',
+  styleUrls: ['./films-main-content.component.scss']
 })
-export class FilmsContentComponent implements OnInit {
+export class FilmsMainContentComponent implements OnInit {
   films: FilmShortModel[];
 
   constructor(private service: FilmsService) { }
 
   ngOnInit() {
-    this.getRandomFilms();
+    // this.getRandomFilms();
   }
 
   getRandomFilms() {

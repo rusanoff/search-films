@@ -1,21 +1,21 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { FilmsListPageComponent } from './films-list-page/films-list-page.component';
-import {FilmsDetailPageComponent} from './films-detail-page/films-detail-page.component';
+import { FilmsMainComponent } from './films-main/films-main.component';
+import {FilmsDetailComponent} from './films-detail/films-detail.component';
 import {NotFoundComponent} from '../not-found/not-found.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: FilmsListPageComponent
+    component: FilmsMainComponent
   },
   {
     path: 'films',
-    component: FilmsListPageComponent
+    component: FilmsMainComponent
   },
   {
     path: 'films/:title',
-    component: FilmsDetailPageComponent
+    component: FilmsDetailComponent
   },
   {
     path: 'not-found',

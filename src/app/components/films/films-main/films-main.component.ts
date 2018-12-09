@@ -5,10 +5,10 @@ import {FilmsService} from '../films.service';
 
 @Component({
   selector: 'app-films-list-page',
-  templateUrl: './films-list-page.component.html',
-  styleUrls: ['./films-list-page.component.scss']
+  templateUrl: './films-main.component.html',
+  styleUrls: ['./films-main.component.scss']
 })
-export class FilmsListPageComponent implements OnInit {
+export class FilmsMainComponent implements OnInit {
   data: FilmShortModel[];
   searching = false;
   loading = false;

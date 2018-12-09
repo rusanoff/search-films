@@ -1,14 +1,14 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {FilmsService} from '../films.service';
 import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-films-detail-page',
-  templateUrl: './films-detail-page.component.html',
-  styleUrls: ['./films-detail-page.component.scss']
+  templateUrl: './films-detail.component.html',
+  styleUrls: ['./films-detail.component.scss']
 })
-export class FilmsDetailPageComponent implements OnInit {
+export class FilmsDetailComponent implements OnInit {
   public film: any = {};
   public filmObj: any = {
     title: '',

@@ -13,7 +13,7 @@ export class FilmsMainContentComponent implements OnInit {
   constructor(private service: FilmsService) { }
 
   ngOnInit() {
-    // this.getRandomFilms();
+    this.getRandomFilms();
   }
 
   getRandomFilms() {

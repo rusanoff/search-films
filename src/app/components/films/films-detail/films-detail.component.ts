@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {FilmsService} from '../films.service';
 import {Subscription} from 'rxjs';
+import {FilmFullModel} from '../films.model';
 
 @Component({
   selector: 'app-films-detail-page',
@@ -9,7 +10,7 @@ import {Subscription} from 'rxjs';
   styleUrls: ['./films-detail.component.scss']
 })
 export class FilmsDetailComponent implements OnInit {
-  public film: any = {};
+  public film: FilmFullModel;
   public filmObj: any = {
     title: '',
     year: '',
@@ -38,7 +39,7 @@ export class FilmsDetailComponent implements OnInit {
 
   getFilm() {
     this.service.getFilm(this.filmObj)
-      .subscribe((data) => {
+      .subscribe((data: FilmFullModel) => {
         this.film = data;
       }, (e) => {
         console.log(e);

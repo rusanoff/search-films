@@ -10,6 +10,7 @@ import {FilmsMainSearchComponent} from './films-main/films-main-search/films-mai
 import {FilmsMainContentComponent} from './films-main/films-main-content/films-main-content.component';
 import {FilmsMainContentItemComponent} from './films-main/films-main-content/films-content-item/films-main-content-item.component';
 import {LoaderComponent} from '../loader/loader.component';
+import {CapitalLetterPipe} from '../../pipes/capital-letter.pipe';
 
 @NgModule({
   imports: [
@@ -28,6 +29,10 @@ import {LoaderComponent} from '../loader/loader.component';
     LoaderComponent,
     FilmsMainComponent,
     FilmsDetailComponent,
+    CapitalLetterPipe
+  ],
+  providers: [
+    CapitalLetterPipe
   ]
 })
 export class FilmsModule {

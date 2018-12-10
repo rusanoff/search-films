@@ -39,7 +39,7 @@
     height: 240px;
     margin-right: 10px;
     background-repeat: no-repeat;
-    background-position: center center;
+    background-position: center top;
     background-color: #ccc;
     background-size: contain;
     transition-duration: .2s;
@@ -86,4 +86,5 @@
 
 .empty {
   color: #cc0000;
+  font-weight: 700;
 }

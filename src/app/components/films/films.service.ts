@@ -3,16 +3,14 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {forkJoin, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {FilmShortModel} from './films.model';
+import {FilmFullModel, FilmShortModel} from './films.model';
+import {API, IMAGE_PLACEHOLDER, UNDEFIND_VALUE} from '../../app.constants';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FilmsService {
-  private url = 'http://www.omdbapi.com';
-  // private apikey = 'e1ec7fad';
   private randomFilmsCount = 4;
-  private imagePlaceholder = 'https://via.placeholder.com/200x240';
 
   constructor(private http: HttpClient) {
   }
@@ -22,27 +20,29 @@ export class FilmsService {
 
       params = params.append('s', name);
 
-      return this.http.get(`${this.url}`, {params})
+      return this.http.get(API.URL, {params})
         .pipe(map((data: any) => {
-          if (data['Response'] === 'True') {
-            data['Search'].map((film) => {
+          data = humps.camelizeKeys(data);
+
+          if (data.response === 'True') {
+            data.search.map( (film) => {
               return new FilmShortModel(
-                film['Poster'],
-                film['Title'],
-                film['Year'],
+                film.poster,
+                film.title,
+                film.year,
                 '',
                 '',
                 '',
-                film['Type']
+                film.type
               );
             });
 
-            data['Search'].map((film) => {
-              film['Type'] = this.createFilmTypeValue(film['Type']);
-              film['Poster'] = this.setValidValue(film, 'Poster', this.imagePlaceholder);
+            data.search.map((film) => {
+              film.type = this.createFilmTypeValue(film.type);
+              film.poster = this.setValidValue(film.poster, IMAGE_PLACEHOLDER);
             });
 
-            return humps.camelizeKeys(data['Search']);
+            return data.search;
           }
 
           return [];
@@ -57,9 +57,42 @@ export class FilmsService {
     params = params.append('type', film.type);
     params = params.append('plot', 'full');
 
-    return this.http.get(`${this.url}`, {params})
-      .pipe(map((data) => {
+    return this.http.get(API.URL, {params})
+      .pipe(map((data: FilmFullModel) => {
         return humps.camelizeKeys(data);
+
+        // const responseData = humps.camelizeKeys(data);
+
+        // responseData = data.response = (<any>data.response) === 'True';
+        // responseData = data.dvd = data.dVD;
+        //
+        // if (data.response) {
+        //   const film = new FilmFullModel(
+        //     data.title,
+        //     data.year,
+        //     data.rated,
+        //     data.released,
+        //     data.runtime,
+        //     data.genre,
+        //     data.director,
+        //     data.writers,
+        //     data.actors,
+        //     data.plot,
+        //     data.language,
+        //     data.country,
+        //     data.awards,
+        //     data.poster,
+        //     data.ratings,
+        //     data.type,
+        //     data.dvd,
+        //     data.boxOffice,
+        //     data.production,
+        //     data.response
+        //   );
+        //
+        //   return film;
+        // }
+        // return null;
       }));
   }
 
@@ -71,39 +104,37 @@ export class FilmsService {
 
       params = params.append('i', this.generateFilmId());
 
-      observables.push(this.http.get(`${this.url}`, {params})
-        .pipe(map((film) => {
-          if (film['Response'] === 'True') {
+      observables.push(this.http.get(API.URL, {params})
+        .pipe(map((film: any) => {
+          film = humps.camelizeKeys(film);
+
+          if (film.response === 'True') {
             const filmObj = new FilmShortModel(
-              this.setValidValue(film, 'Poster', this.imagePlaceholder),
-              film['Title'],
-              film['Year'],
-              this.setValidValue(film, 'Plot'),
-              this.setValidValue(film, 'Genre'),
-              this.setValidValue(film, 'Runtime'),
-              film['Type']
+              this.setValidValue(film.poster, IMAGE_PLACEHOLDER),
+              film.title,
+              film.year,
+              this.setValidValue(film.plot),
+              this.setValidValue(film.genre),
+              this.setValidValue(film.runtime),
+              this.setValidValue(film.type, '')
             );
 
             if (filmObj.plot && filmObj.plot.length > 100) {
               filmObj.plot = `${filmObj.plot.slice(0, 97)}...`;
             }
 
-            if (filmObj.type === 'N/A') {
-              filmObj.type = '';
-            }
-
             return filmObj;
-          } else {
-            return new FilmShortModel('', '', '', '', '' , '');
           }
+
+          return null;
         })));
     }
 
     return forkJoin(observables);
   }
 
-  setValidValue(obj: any, prop: string, defaultValue?: string): string {
-    return (obj[prop] && obj[prop] !== 'N/A') ? obj[prop] : defaultValue ? defaultValue : `${prop} is not found`;
+  setValidValue(propValue: string, defaultValue?: string): string {
+    return (propValue && propValue !== 'N/A') ? propValue : (typeof defaultValue !== 'undefined') ? defaultValue : UNDEFIND_VALUE;
   }
 
   private generateFilmId(): string {

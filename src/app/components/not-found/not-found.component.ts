@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 
 @Component({
@@ -8,12 +8,12 @@ import {Router} from '@angular/router';
 })
 export class NotFoundComponent implements OnInit {
 
-  constructor(private route: Router) { }
+  constructor(private route: Router) {
+  }
 
   ngOnInit() {
     setTimeout(() => {
       this.route.navigate(['/']);
     }, 5000);
   }
-
 }

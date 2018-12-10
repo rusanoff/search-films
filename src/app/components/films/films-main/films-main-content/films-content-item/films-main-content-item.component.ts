@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import {FilmShortModel} from '../../../films.model';
+import {UNDEFIND_VALUE} from '../../../../../app.constants';
 
 @Component({
   selector: 'app-films-content-item',
@@ -7,15 +8,9 @@ import {FilmShortModel} from '../../../films.model';
   styleUrls: ['./films-main-content-item.component.scss']
 })
 export class FilmsMainContentItemComponent {
-
-  private errorSubstr = 'not found';
-
   @Input() film: FilmShortModel;
 
-  constructor() { }
-
-  isNotFound(prop: string) {
-    return prop && prop.indexOf(this.errorSubstr) !== -1;
+  isNotFound(value: string) {
+    return value && value === UNDEFIND_VALUE;
   }
-
 }

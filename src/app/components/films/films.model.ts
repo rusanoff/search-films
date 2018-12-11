@@ -1,4 +1,5 @@
 class FilmShortModel {
+  id: string;
   poster: string;
   title: string;
   year: string;
@@ -8,7 +9,8 @@ class FilmShortModel {
   type?: string;
   requestParam?: string;
 
-  constructor(poster: string,
+  constructor(id: string,
+              poster: string,
               title: string,
               year: string,
               plot: string,
@@ -16,6 +18,7 @@ class FilmShortModel {
               runtime: string,
               type?: string,
               requestParam?: string) {
+    this.id = id;
     this.poster = poster;
     this.title = title;
     this.year = year;
@@ -36,7 +39,7 @@ class FilmFullModel {
   genre: string;
   director: string;
   writers: string;
-  actors: string[];
+  actors: any;
   plot: string;
   language: string;
   country: string;
@@ -50,7 +53,6 @@ class FilmFullModel {
   dvd: string;
   boxOffice: string;
   production: string;
-  response: boolean;
 
   constructor(title: string,
               year: string,
@@ -60,7 +62,7 @@ class FilmFullModel {
               genre: string,
               director: string,
               writers: string,
-              actors: string[],
+              actors: any,
               plot: string,
               language: string,
               country: string,
@@ -73,8 +75,7 @@ class FilmFullModel {
               type: string,
               dvd: string,
               boxOffice: string,
-              production: string,
-              response: boolean) {
+              production: string) {
     this.title = title;
     this.year = year;
     this.rated = rated;
@@ -94,7 +95,6 @@ class FilmFullModel {
     this.dvd = dvd;
     this.boxOffice = boxOffice;
     this.production = production;
-    this.response = response;
   }
 }
 

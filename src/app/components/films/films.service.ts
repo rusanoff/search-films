@@ -27,6 +27,7 @@ export class FilmsService {
           if (data.response === 'True') {
             data.search.map( (film) => {
               return new FilmShortModel(
+                film.id,
                 film.poster,
                 film.title,
                 film.year,
@@ -39,7 +40,7 @@ export class FilmsService {
 
             data.search.map((film) => {
               film.type = this.createFilmTypeValue(film.type);
-              film.poster = this.setValidValue(film.poster, IMAGE_PLACEHOLDER);
+              film.poster = this.setValidValue(film.poster, IMAGE_PLACEHOLDER.LIST_ITEM);
             });
 
             return data.search;
@@ -49,50 +50,43 @@ export class FilmsService {
         }));
   }
 
-  getFilm(film): Observable<Object> {
+  getFilm(id): Observable<Object> {
     let params = new HttpParams();
 
-    params = params.append('t', film.title);
-    params = params.append('y', film.year);
-    params = params.append('type', film.type);
+    params = params.append('i', id);
     params = params.append('plot', 'full');
 
     return this.http.get(API.URL, {params})
-      .pipe(map((data: FilmFullModel) => {
-        return humps.camelizeKeys(data);
+      .pipe(map((data: any) => {
+        data = humps.camelizeKeys(data);
 
-        // const responseData = humps.camelizeKeys(data);
+        if (data.response === 'True') {
+          const filmObj = new FilmFullModel(
+            data.title,
+            data.year,
+            this.setValidDetailValue(data.rated),
+            this.setValidDetailValue(data.released),
+            this.setValidDetailValue(data.runtime),
+            this.setValidDetailValue(data.genre),
+            this.setValidDetailValue(data.director),
+            this.setValidDetailValue(data.writer),
+            this.setValidDetailValue(data.actors),
+            this.setValidDetailValue(data.plot),
+            this.setValidDetailValue(data.language),
+            this.setValidDetailValue(data.country),
+            this.setValidDetailValue(data.awards),
+            this.setValidDetailValue(data.poster, IMAGE_PLACEHOLDER.DETAIL),
+            data.ratings,
+            this.setValidDetailValue(data.type),
+            this.setValidDetailValue(data.dVD),
+            this.setValidDetailValue(data.boxOffice),
+            this.setValidDetailValue(data.production)
+          );
 
-        // responseData = data.response = (<any>data.response) === 'True';
-        // responseData = data.dvd = data.dVD;
-        //
-        // if (data.response) {
-        //   const film = new FilmFullModel(
-        //     data.title,
-        //     data.year,
-        //     data.rated,
-        //     data.released,
-        //     data.runtime,
-        //     data.genre,
-        //     data.director,
-        //     data.writers,
-        //     data.actors,
-        //     data.plot,
-        //     data.language,
-        //     data.country,
-        //     data.awards,
-        //     data.poster,
-        //     data.ratings,
-        //     data.type,
-        //     data.dvd,
-        //     data.boxOffice,
-        //     data.production,
-        //     data.response
-        //   );
-        //
-        //   return film;
-        // }
-        // return null;
+          return filmObj;
+        }
+
+        return null;
       }));
   }
 
@@ -110,7 +104,8 @@ export class FilmsService {
 
           if (film.response === 'True') {
             const filmObj = new FilmShortModel(
-              this.setValidValue(film.poster, IMAGE_PLACEHOLDER),
+              film.imdbID,
+              this.setValidValue(film.poster, IMAGE_PLACEHOLDER.LIST_ITEM),
               film.title,
               film.year,
               this.setValidValue(film.plot),
@@ -145,6 +140,10 @@ export class FilmsService {
     }
 
     return `tt0${idValidPart}`;
+  }
+
+  private setValidDetailValue(value: string, defaultValue?: string) {
+    return (value !== 'N/A') ? value : (typeof defaultValue !== 'undefined') ? defaultValue : null;
   }
 
   private createFilmTypeValue(type: string): string {

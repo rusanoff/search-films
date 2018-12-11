@@ -11,24 +11,15 @@ import {FilmFullModel} from '../films.model';
 })
 export class FilmsDetailComponent implements OnInit {
   public film: FilmFullModel;
-  public filmObj: any = {
-    title: '',
-    year: '',
-    type: ''
-  };
 
-  private routeSubscription: Subscription;
+  private id: string;
   private querySubscription: Subscription;
 
   constructor(private route: ActivatedRoute,
               private service: FilmsService) {
-    this.routeSubscription = route.params.subscribe(params => {
-      this.filmObj.title = params.title;
-    });
     this.querySubscription = route.queryParams.subscribe(
       (queryParam: any) => {
-        this.filmObj.year = queryParam.year;
-        this.filmObj.type = queryParam.type;
+        this.id = queryParam.id;
       }
     );
   }
@@ -38,9 +29,10 @@ export class FilmsDetailComponent implements OnInit {
   }
 
   getFilm() {
-    this.service.getFilm(this.filmObj)
+    this.service.getFilm(this.id)
       .subscribe((data: FilmFullModel) => {
         this.film = data;
+        console.log(this.film);
       }, (e) => {
         console.log(e);
       });

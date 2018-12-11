@@ -1,7 +1,7 @@
 <div class="film" *ngIf="film">
   <a class="film__route"
      [routerLink]="['/films', film.title]"
-     [queryParams]="{year: film.year, type: film.type}">
+     [queryParams]="{id: film.id}">
   <div class="film__poster" [ngStyle]="{'background-image': 'url(' + film.poster + ')'}"></div>
     <div class="film__info">
       <div class="film__prop film__prop--title">{{film.title}} ({{film.year}})</div>
